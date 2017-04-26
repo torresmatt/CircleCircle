@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Assets.SparrowhawkGames.Scripts;
 using UnityEngine;
 
 namespace SparrowhawkGames.Scripts.Weapons.Bullets
@@ -9,8 +10,7 @@ namespace SparrowhawkGames.Scripts.Weapons.Bullets
         [SerializeField] private GameObject _hitsoundPrefab;
         [SerializeField] private string[] _tagsToSplat;
         [SerializeField] private float _damage;
-        [SerializeField] private Transform _bulletTip;
-        [SerializeField] private float _rayCastDistance;
+        [SerializeField] private Collider2D _collider2D;
         [SerializeField] private float _bulletSpeed;
         [SerializeField] private float _lifetime;
 
@@ -23,22 +23,40 @@ namespace SparrowhawkGames.Scripts.Weapons.Bullets
 
         private void FixedUpdate()
         {
-            RaycastHit2D hit = Physics2D.Raycast(_bulletTip.position, Vector2.right * _rayCastDistance);
-            if (hit.collider != null)
+            float distance = _bulletSpeed * Time.deltaTime;
+
+            Vector2 moveDirection = transform.right * distance;
+            moveDirection = moveDirection.normalized;
+
+            Vector2 newPosition = (Vector2) transform.position + moveDirection;
+
+            RaycastHit2D[] hits = new RaycastHit2D[8];
+
+            int numHits = _collider2D.Cast(moveDirection, hits, distance);
+
+            int hitIndex = -1;
+
+            if (numHits > 0)
             {
-                if (CanBeSplatted(hit.collider.gameObject)) Splat();
-                Health otherHealth = hit.collider.gameObject.GetComponent<Health>();
-                if (otherHealth != null) otherHealth.CurrentHealth -= _damage;
-                Instantiate(_hitsoundPrefab, transform.position, Quaternion.identity);
-                Die();
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    if (!hits[i].collider.isTrigger)
+                    {
+                        hitIndex = i;
+                        break;
+                    }
+                }
+                if (hitIndex >= 0)
+                {
+                    newPosition = hits[hitIndex].centroid + hits[hitIndex].normal * .005f;
+                    if (CanBeSplatted(hits[hitIndex].collider.gameObject)) Splat(hits[hitIndex].point);
+                    Health otherHealth = hits[hitIndex].collider.gameObject.GetComponent<Health>();
+                    if (otherHealth != null) otherHealth.CurrentHealth -= _damage;
+                    Die();
+                }
             }
-        }
 
-        private void Update()
-        {
-            transform.Translate(transform.right * _bulletSpeed * Time.deltaTime, Space.World);
-
-            if (Time.realtimeSinceStartup - _birthTime > _lifetime) Destroy(gameObject);
+            transform.position = newPosition;
         }
 
         private void OnBecameInvisible()
@@ -56,9 +74,9 @@ namespace SparrowhawkGames.Scripts.Weapons.Bullets
             return _tagsToSplat.Contains(other.tag);
         }
 
-        private void Splat()
+        private void Splat(Vector2 position)
         {
-            Instantiate(_splatPrefab, _bulletTip.position, _bulletTip.rotation);
+            Instantiate(_splatPrefab, position, transform.rotation);
         }
     }
 }

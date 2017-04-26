@@ -9,6 +9,8 @@ namespace SparrowhawkGames.Scripts
 
         void LateUpdate()
         {
+            if (_player == null) return;
+
             Vector3 cameraPosition = transform.position;
             Vector3 playerPosition = _player.position;
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-namespace SparrowhawkGames.Scripts
+namespace Assets.SparrowhawkGames.Scripts
 {
     public class PlayerCastingMovement : MonoBehaviour
     {
@@ -61,6 +60,7 @@ namespace SparrowhawkGames.Scripts
             _moveDirection = Vector2.zero;
             _moveDirection.x += _horizAxis * distance;
             _moveDirection.y += _vertAxis * distance;
+            _moveDirection = Vector2.ClampMagnitude(_moveDirection, distance);
 
             Vector3 newPosition = (Vector2) transform.position + _moveDirection;
 
@@ -81,37 +81,6 @@ namespace SparrowhawkGames.Scripts
             }
 
             transform.position = newPosition;
-        }
-
-        private void UpdateNotUsed()
-        {
-            _vertAxis = Input.GetAxis("Vertical");
-            _horizAxis = Input.GetAxis("Horizontal");
-            if (!HasInput(_vertAxis) && !HasInput(_horizAxis)) return;
-
-            float distance = _currentMoveSpeed * Time.deltaTime;
-
-            if (SprintKeyDown())
-            {
-                _sprinting = true;
-                if (CurrentSprintPool > 0)
-                {
-                    StartCoroutine(AccelerateToSprit());
-                    CurrentSprintPool -= _sprintPoolDrainRate * Time.deltaTime;
-                }
-            }
-            else
-            {
-                _sprinting = false;
-                CurrentSprintPool += _sprintPoolChargeRate * Time.deltaTime;
-                StartCoroutine(DecelerateToNormal());
-            }
-
-            _moveDirection = Vector2.zero;
-            _moveDirection.x += _horizAxis * distance;
-            _moveDirection.y += _vertAxis * distance;
-
-            transform.Translate(_moveDirection);
         }
 
         private bool HasInput(float axis)

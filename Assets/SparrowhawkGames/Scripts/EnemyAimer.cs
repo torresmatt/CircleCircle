@@ -25,6 +25,8 @@ namespace SparrowhawkGames.Scripts
 
         void Update()
         {
+            if (_target == null) return;
+
             Vector3 turretPosition = Camera.main.WorldToScreenPoint(_turretRoot.position);
             Vector3 targetPosition = Camera.main.WorldToScreenPoint(_target.position);
             Vector3 dirToTarget = targetPosition - turretPosition;

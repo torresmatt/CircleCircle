@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace SparrowhawkGames.Scripts
@@ -27,7 +26,7 @@ namespace SparrowhawkGames.Scripts
             set { _currentSprintPool = Mathf.Clamp(value, 0f, _maxSprintPool); }
         }
 
-        void Awake()
+        private void Awake()
         {
             _currentMoveSpeed = _movementSpeed;
             CurrentSprintPool = _maxSprintPool;

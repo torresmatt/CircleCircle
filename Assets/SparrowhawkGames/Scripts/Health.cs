@@ -28,7 +28,7 @@ namespace SparrowhawkGames.Scripts
             set
             {
                 _currentHealth = Mathf.Clamp(value, 0f, _maxHealth);
-                HealthChanged.Invoke(HealthPct);
+                if (HealthChanged != null) HealthChanged.Invoke(HealthPct);
                 if (CurrentHealth <= 0.0f) Die();
             }
         }
@@ -36,6 +36,7 @@ namespace SparrowhawkGames.Scripts
         public float MaxHealth
         {
             get { return _maxHealth; }
+            set { _maxHealth = value; }
         }
 
         public float HealthPct

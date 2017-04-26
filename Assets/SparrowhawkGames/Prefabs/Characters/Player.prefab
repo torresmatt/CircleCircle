@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4143142419932398}
   - component: {fileID: 212625283551009450}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4492296588182322}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4047175424345260}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TurretRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4661521213140542}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4124269706428026}
   - component: {fileID: 212130125958905006}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BarImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 58921877004897174}
   - component: {fileID: 82048802337580836}
   - component: {fileID: 212510523204643566}
-  - component: {fileID: 50168316412356832}
-  m_Layer: 0
+  - component: {fileID: 50627888315096848}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4348143806221860}
   - component: {fileID: 212919072951440540}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TurretTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ Transform:
   m_Father: {fileID: 4143142419932398}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50168316412356832
+--- !u!50 &50627888315096848
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -237,14 +237,14 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
-  m_AngularDrag: 1
-  m_GravityScale: 0
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &58921877004897174
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -272,7 +272,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.5
-  m_Pitch: 1
+  m_Pitch: -3
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -363,10 +363,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7406761f77aa937428c4beef19d20c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 1951376362774092, guid: 399839cfd85cce949bc3fbb4740d2e62,
+  _bulletPrefab: {fileID: 1859787186382046, guid: 399839cfd85cce949bc3fbb4740d2e62,
     type: 2}
   _turretTip: {fileID: 4348143806221860}
-  _bulletsPerSecond: 3
+  _bulletsPerSecond: 5
   _shootSounds:
   - {fileID: 8300000, guid: 0d4f6741ddb047a43805aace4569e6cb, type: 3}
   - {fileID: 8300000, guid: 3c40693945aced94d82d59728e58dcba, type: 3}
@@ -376,6 +376,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 38a8feeca3542e14d941b7d1fd1923c2, type: 3}
   - {fileID: 8300000, guid: 7551e2221e4e38843b8c15a81241b1ae, type: 3}
   - {fileID: 8300000, guid: f9ba79b3d88ba3744ba7b2f552828737, type: 3}
+  _shotVolume: 0.568
   _audioSource: {fileID: 82048802337580836}
 --- !u!114 &114331939400454324
 MonoBehaviour:
@@ -415,8 +416,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider2D: {fileID: 58921877004897174}
-  _movementSpeed: 5
-  _sprintSpeed: 10
+  _movementSpeed: 8
+  _sprintSpeed: 15
   _maxSprintPool: 100
   _sprintPoolDrainRate: 20
   _sprintPoolChargeRate: 20
@@ -463,7 +464,6 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_MaskInteraction: 0
 --- !u!212 &212510523204643566
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -504,7 +504,6 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_MaskInteraction: 0
 --- !u!212 &212625283551009450
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -545,7 +544,6 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_MaskInteraction: 0
 --- !u!212 &212919072951440540
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -586,4 +584,3 @@ SpriteRenderer:
   m_Size: {x: 0.5, y: 0.375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_MaskInteraction: 0

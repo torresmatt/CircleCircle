@@ -6,7 +6,7 @@ namespace SparrowhawkGames.Scripts
     {
         [SerializeField] private Transform _turretRoot;
 
-        void Update()
+        private void Update()
         {
             Vector3 turretPosition = Camera.main.WorldToScreenPoint(_turretRoot.position);
             Vector3 dirToMouse = Input.mousePosition - turretPosition;
